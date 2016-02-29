@@ -1,0 +1,142 @@
+RV == RAD VISION, a industry leader in visual communication.
+
+Call leg
+Segment of a call path. A logical connection between a telephone and a router, a router and a network, a router and a PBX, or a router and the PSTN using a session protocol. Each call leg corresponds to a dial peer.
+
+
+http://lists.cs.columbia.edu/pipermail/sip-implementors/2001...
+
+> Call leg: Another name for a dialog.
+>
+> Dialog: A dialog is a peer-to-peer SIP relationship between a Various
+> Authors [Page 13] Internet Draft SIP October 26, 2001 UAC and UAS that
+> persists for some time. A dialog is established by SIP messages, such as
+> a 2xx response to an INVITE request. A dialog is identified by a call
+> identifier, local address, and remote address. A dialog was formerly
+> known as a call leg in RFC 2543. 
+
+
+AC == SIP_AUTO_CALLBACK,  
+AR == SIP_AUTO_RECALL
+
+
+
+the entry of Arris Pcable tasks: SYS_pp_init@sys_tsk.c
+
+
+sip_RvStackConstruct,
+RvSipStackConstruct,
+StackConstructModules,
+StackConstructCallLegModule,
+SipCallLegMgrConstruct,
+SetTranscEvHandlers,
+CallLegTranscEvStateChangedHandler
+
+
+
+
+
+CallLegSessionConnect() to initiate outgoing call.
+
+
+
+
+
+
+
+
+
+
+CALLPtaskk()@sip_main.c
+SipFsmEntry(),
+sipProcessEvent(epFsmMasterTable),
+epFsmMasterTable-->callingEntry()
+buildAndSendInvite()-->RvSipCallLegConnect()-->CallLegSessionConnect()
+
+
+
+
+
+
+callLegStateChangedEv
+RvSipCallLegAuthenticate
+CallLegSessionConnect()
+CallLegCreateTransaction(),CallLegSendRequest()
+SipTransactionRequest(),
+TransactionControlSendRequest(),
+GenerateAndSendRequest(),
+TransactionTransportSendMsg(),
+SipTransmitterSendMessage()
+
+
+
+
+
+
+
+
+
+
+s_line==LineRec == RvSipAppCallLegHandle??
+
+
+
+
+
+
+
+
+configuration: pktcEUEDevPCSCFAddr
+Mib10.c
+
+
+
+sip_RvStackConstruct
+IsRequireInSupportedList()
+
+
+
+DM_FEATURE_CHECK
+
+
+isCFVNotifyRecevied()---> change...to other...
+
+
+
+
+To split a string :
+
+            /*len = EBufferUsed(VB_GET_STRING(vbp));
+            strncpy(str_tmp, (char *)EBufferStart(VB_GET_STRING(vbp)), len);
+            str_tmp[len] = '\0';
+            str_p = str_tmp;
+            while((str_line_number = strsep(&str_p,",")) !=NULL)
+            {
+             	  uint_line_number = atoi(str_line_number);
+            }*/
+            
+            
+GPIO 读写操作函数在pal_sys.h定义 PAL_sysGpioInBit
+
+
+        case FBDTL_GG_REQ_QUERY_INFO_TYPE_NSL_PORT_LIST:
+        {
+            CHAR * str_p,str_line_number;
+            UINT16 uint_line_number;
+            str_p = data ->string_data;
+            while( str_line_number = strsep(&str_p, ",") != NULL)
+            {
+                uint_line_number = (UINT16)atoi(str_line_number);
+                /*Set the FXS line.*/
+                if((uint_line_number > 0) && (uint_line_number <= fb_dect_mcb.vl_cfg.max_num_fxs))
+                {
+                     fb_dect_mcb.vl_cfg_info[uint_line_number -1].ep_num = data->index;
+                }
+                /*Set the DECT line.*/
+                else if((uint_line_number >  fb_dect_mcb.vl_cfg.max_num_fxs) && (uint_line_number <= (fb_dect_mcb.vl_cfg.max_num_fxs + fb_dect_mcb.max_eps)))
+                {
+                    ;
+                }
+            }
+            break;
+        }
